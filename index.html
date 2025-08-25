@@ -263,6 +263,101 @@
         }
         document.querySelectorAll('.recruiter-nav-item').forEach(addRecruiterNavListener);
         backToHomeButtons.forEach(button => { button.addEventListener('click', (e) => { e.preventDefault(); showRecruiterSubPage('home'); }); });
+    // ...existing code...
+
+// --- Pretty URL Routing Augmentation ---
+
+function routeTo(url, state = {}) {
+    history.pushState(state, '', url);
+}
+
+function getCurrentRoute() {
+    const path = window.location.pathname.replace(/^\//, '');
+    if (!path || path === '') return { view: null, subpage: null };
+    if (path.startsWith('recruiter')) {
+        const subpage = path.split('/')[1] || 'home';
+        return { view: 'recruiter', subpage };
+    }
+    if (path === 'stalker') return { view: 'stalker', subpage: null };
+    if (path === 'developer') return { view: 'developer', subpage: null };
+    return { view: null, subpage: null };
+}
+
+// Augment showView to update URL
+const _showView = typeof showView === 'function' ? showView : null;
+if (_showView) {
+    window.showView = function(viewName, avatarHTML) {
+        let url = '/';
+        if (viewName === 'recruiter') url = '/recruiter';
+        if (viewName === 'stalker') url = '/stalker';
+        if (viewName === 'developer') url = '/developer';
+        routeTo(url);
+        _showView(viewName, avatarHTML);
+    };
+}
+
+// Augment showRecruiterSubPage to update URL
+const _showRecruiterSubPage = typeof showRecruiterSubPage === 'function' ? showRecruiterSubPage : null;
+if (_showRecruiterSubPage) {
+    window.showRecruiterSubPage = function(subpage) {
+        let url = '/recruiter';
+        if (subpage && subpage !== 'home') url += '/' + subpage;
+        routeTo(url);
+        _showRecruiterSubPage(subpage);
+    };
+}
+
+// Splash/profile routing
+function showSplashScreenWithRoute() {
+    routeTo('/');
+    if (typeof showSplashScreen === 'function') showSplashScreen();
+}
+if (typeof showSplashScreen === 'function') {
+    window.showSplashScreen = showSplashScreenWithRoute;
+}
+
+// Handle browser navigation (back/forward)
+window.addEventListener('popstate', function() {
+    const route = getCurrentRoute();
+    if (!route.view) {
+        if (typeof showSplashScreen === 'function') showSplashScreen();
+        return;
+    }
+    if (route.view === 'recruiter') {
+        if (typeof showView === 'function') showView('recruiter', profileAvatars.recruiter);
+        if (typeof showRecruiterSubPage === 'function') showRecruiterSubPage(route.subpage || 'home');
+        return;
+    }
+    if (route.view === 'stalker' && typeof showView === 'function') {
+        showView('stalker', profileAvatars.stalker);
+        return;
+    }
+    if (route.view === 'developer' && typeof showView === 'function') {
+        showView('developer', profileAvatars.developer);
+        return;
+    }
+});
+
+// Initial route on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const route = getCurrentRoute();
+    if (!route.view) return; // Default splash/profile flow
+    if (route.view === 'recruiter') {
+        if (typeof showView === 'function') showView('recruiter', profileAvatars.recruiter);
+        if (typeof showRecruiterSubPage === 'function') showRecruiterSubPage(route.subpage || 'home');
+        return;
+    }
+    if (route.view === 'stalker' && typeof showView === 'function') {
+        showView('stalker', profileAvatars.stalker);
+        return;
+    }
+    if (route.view === 'developer' && typeof showView === 'function') {
+        showView('developer', profileAvatars.developer);
+        return;
+    }
+});
+
+// ...existing code...
     </script>
 </body>
 </html>
