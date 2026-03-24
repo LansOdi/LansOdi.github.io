@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lans Odidi | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YG1SC21VD3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YG1SC21VD3');
+</script>
+</head>
+<body class="page-fade" style="overflow: hidden;">
+    <div id="splash-screen" class="fixed inset-0 flex flex-col items-center justify-center z-50">
+        <h1>Lans Odidi</h1>
+        <p class="text-gray-400 mt-4 animate-pulse">Click anywhere to continue</p>
+    </div>
+    <div id="profile-screen" class="fixed inset-0 flex-col items-center justify-center z-40 hidden opacity-0">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12">Who's watching?</h2>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="profile-card flex flex-col items-center gap-4 cursor-pointer" data-profile="recruiter">
+                <div class="avatar w-32 h-32 md:w-40 md:h-40 rounded-md bg-gradient-to-br from-blue-500 to-blue-800 flex items-center justify-center"><i data-feather="briefcase" class="w-16 h-16"></i></div>
+                <span class="text-xl font-bold">Recruiter</span>
+            </div>
+            <div class="profile-card flex flex-col items-center gap-4 cursor-pointer" data-profile="stalker">
+                <div class="avatar w-32 h-32 md:w-40 md:h-40 rounded-md bg-gradient-to-br from-purple-500 to-purple-800 flex items-center justify-center"><i data-feather="eye" class="w-16 h-16"></i></div>
+                <span class="text-xl font-bold">Stalker</span>
+            </div>
+            <div class="profile-card flex flex-col items-center gap-4 cursor-pointer" data-profile="developer">
+                <div class="avatar w-32 h-32 md:w-40 md:h-40 rounded-md bg-gradient-to-br from-teal-500 to-teal-800 flex items-center justify-center"><i data-feather="code" class="w-16 h-16"></i></div>
+                <span class="text-xl font-bold">Developer</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Fade in on load
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = '1';
+        });
+
+        const splashScreen = document.getElementById('splash-screen');
+        const profileScreen = document.getElementById('profile-screen');
+        const profileCards = document.querySelectorAll('.profile-card');
+
+        function showProfileScreen() {
+            splashScreen.style.display = 'none';
+            profileScreen.style.display = 'flex';
+            setTimeout(() => {
+                profileScreen.style.opacity = '1';
+            }, 50);
+        }
+
+        splashScreen.addEventListener('click', showProfileScreen);
+
+        profileCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const profileName = card.dataset.profile;
+                
+                // Fade out before navigation
+                document.body.style.opacity = '0';
+                
+                setTimeout(() => {
+                    window.location.href = `${profileName}.html`;
+                }, 500); // 500ms matches the transition duration
+            });
+        });
+        
+        // Check if we came from another page via back button
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.body.style.opacity = '1';
+                showProfileScreen(); // Usually going back to index means we want profiles
+            }
+        });
+    </script>
+</body>
+</html>

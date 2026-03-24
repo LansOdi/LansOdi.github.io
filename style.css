@@ -1,0 +1,52 @@
+:root { --hulu-green: #1ce783; --hulu-dark: #0B0C0F; --hulu-gray: #202125; }
+body { font-family: 'Manrope', sans-serif; background-color: var(--hulu-dark); color: white; overflow-x: hidden; }
+
+#splash-screen { background-color: var(--hulu-dark); cursor: pointer; transition: opacity 0.5s ease-in-out; }
+#splash-screen h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 800; color: var(--hulu-green); letter-spacing: -0.05em; text-shadow: 0 0 25px rgba(28, 231, 131, 0.4); }
+#profile-screen { background-color: var(--hulu-dark); transition: opacity 0.5s ease-in-out; }
+.profile-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+.profile-card:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 255, 255, 0.1); }
+.profile-card .avatar { border: 4px solid transparent; transition: border-color 0.2s ease-in-out; }
+.profile-card:hover .avatar { border-color: white; }
+.main-content-view { display: none; opacity: 0; transition: opacity 0.8s ease-in-out; min-height: 100vh; overflow-y: auto; }
+.main-content-view.visible { display: block; opacity: 1; }
+body.content-visible { overflow-y: auto; }
+
+.hero-button { transition: background-color 0.2s, color 0.2s; }
+.hero-button-primary { background-color: white; color: var(--hulu-dark); }
+.hero-button-primary:hover { background-color: rgba(255,255,255,0.8); }
+.hero-button-secondary { background-color: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+.hero-button-secondary:hover { background-color: rgba(255,255,255,0.25); }
+.nav-link { position: relative; transition: color 0.2s; }
+.nav-link:after { content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 2px; bottom: -5px; left: 0; background-color: var(--hulu-green); transform-origin: bottom right; transition: transform 0.25s ease-out; }
+.nav-link:hover:after { transform: scaleX(1); transform-origin: bottom left; }
+.content-tile { background-color: var(--hulu-gray); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; overflow: hidden; aspect-ratio: 2/3; }
+.content-tile:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.content-tile-overlay { transition: background-color 0.3s ease; }
+.content-tile:hover .content-tile-overlay { background-color: rgba(0,0,0,0.7); }
+.hulu-logo-font { font-weight: 800; color: var(--hulu-green); letter-spacing: -0.05em; }
+#profile-dropdown-menu { transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out; }
+.construction-icon { filter: drop-shadow(0 0 15px var(--hulu-green)); }
+.recruiter-sub-page { display: none; }
+.skill-card { background-color: var(--hulu-gray); border-radius: 0.5rem; padding: 1.5rem; text-align: center; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+.skill-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+.skill-icon { margin-bottom: 1rem; color: var(--hulu-green); }
+.skill-category-title { border-bottom: 2px solid var(--hulu-green); display: inline-block; padding-bottom: 0.5rem; margin-bottom: 2rem; }
+.project-card { background-color: var(--hulu-gray); border-radius: 0.5rem; overflow: hidden; display: flex; flex-direction: column; }
+.project-tag { background-color: rgba(28, 231, 131, 0.1); color: var(--hulu-green); }
+.timeline { position: relative; max-width: 1200px; margin: 0 auto; }
+.timeline::after { content: ''; position: absolute; width: 6px; background-color: var(--hulu-gray); top: 0; bottom: 0; left: 50%; margin-left: -3px; }
+.timeline-container { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; }
+.timeline-container.left { left: 0; }
+.timeline-container.right { left: 50%; }
+.timeline-container::after { content: ''; position: absolute; width: 25px; height: 25px; right: -12px; background-color: white; border: 4px solid var(--hulu-green); top: 15px; border-radius: 50%; z-index: 1; display: flex; justify-content: center; align-items: center; }
+.timeline-container.right::after { left: -14px; }
+.timeline-container .content { padding: 20px 30px; background-color: var(--hulu-gray); position: relative; border-radius: 6px; }
+.timeline-date { position: absolute; top: 18px; color: #a8a9ad; font-size: 0.8rem; font-weight: bold; z-index: 2; }
+.timeline-container.left .timeline-date { right: -160px; }
+.timeline-container.right .timeline-date { left: -160px; }
+.contact-button { background-color: var(--hulu-gray); transition: background-color 0.2s; }
+.contact-button:hover { background-color: #313236; }
+
+/* Page fade transition utility */
+.page-fade { opacity: 0; transition: opacity 0.5s ease-in-out; }
