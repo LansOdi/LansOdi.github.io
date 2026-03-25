@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting…</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <noscript>This site uses client-side routing. Enable JavaScript.</noscript>
+    <script>
+      // Preserve the requested path and query, then redirect to the root.
+      // index.html will restore this path so your router can render the right view.
+      try {
+        sessionStorage.setItem('spa_redirect', location.pathname + location.search + location.hash);
+      } catch (e) {}
+      location.replace('/');
+    </script>
+  </body>
+</html>
